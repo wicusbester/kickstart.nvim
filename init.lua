@@ -1035,6 +1035,33 @@ require('lazy').setup({
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
---
---
-vim.opt.shiftwidth = 4
+
+-- ---------- AUTOCMDS ----------
+vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
+  pattern = { '*.wistl' },
+  command = 'setfiletype wistl',
+})
+vim.api.nvim_create_autocmd({ 'FileType' }, {
+  pattern = { 'wistl' },
+  callback = function(ev)
+    vim.bo.autoindent = true
+    vim.bo.expandtab = true
+    vim.bo.shiftwidth = 4
+    vim.bo.softtabstop = 4
+    vim.bo.tabstop = 4
+    vim.bo.textwidth = 80
+  end,
+})
+vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+  pattern = { '.c', '.h' },
+  callback = function(args)
+    local fname = vim.fn.expand(args.file .. ':p:h') .. '/types.vim'
+    if vim.fn.filereadable(fname) == 1 then
+      vim.cmd('source ' .. fname)
+    end
+  end,
+})
+vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+  pattern = { '.s', '.asm' },
+  command = 'set filetype=nasm',
+})
