@@ -93,13 +93,15 @@ vim.g.maplocalleader = ' '
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = false
 
+vim.opt.textwidth = 80
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
+vim.opt.autoindent = true
 --vim.opt.softtabstop = 4
-vim.opt.expandtab = true
+--vim.opt.expandtab = true
 vim.opt.autochdir = true
 
-vim.opt.colorcolumn = '100'
+vim.opt.colorcolumn = '80'
 vim.keymap.set('n', '<leader>/c', ':! javac -d bin src/*.java<cr>', { desc = 'Compile CS214' })
 vim.keymap.set('n', '<leader>/s', ':! java -jar ./style/checkstyle-10.20.1-all.jar -c=./style/stylespec.xml ./src/*.java<cr>', { desc = 'Stylecheck CS214' })
 vim.keymap.set('n', '<leader>/rs', ':! java -cp bin QP search<cr>', { desc = 'Run Search CS214' })
